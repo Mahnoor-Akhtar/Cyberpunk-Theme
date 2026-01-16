@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Static | Cyberpunk Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', 'Arial', sans-serif;
+        }
+
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-green: #39ff14;
+            --neon-purple: #9d00ff;
+            --neon-orange: #ff5500;
+            --dark-bg: #0a0a12;
+            --darker-bg: #050508;
+            --grid-color: rgba(255, 0, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated grid background */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -3;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(50px) translateX(50px); }
+        }
+
+        /* Neon glow effects */
+        .neon-glow {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
+                       radial-gradient(circle at 70% 80%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 60%, rgba(57, 255, 20, 0.1) 0%, transparent 50%);
+            filter: blur(60px);
+        }
+
+        /* Header & Navigation */
+        header {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 18, 0.8);
+            border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+            animation: logoGlow 3s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 20px rgba(255, 0, 255, 0.7); }
+            100% { text-shadow: 0 0 30px rgba(0, 255, 255, 0.7), 0 0 40px rgba(0, 255, 255, 0.4); }
+        }
+
+        .logo span {
+            color: var(--neon-green);
+            animation: spanFlicker 4s infinite;
+        }
+
+        @keyframes spanFlicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 0 0 10px var(--neon-green),
+                             0 0 20px var(--neon-green),
+                             0 0 40px var(--neon-green);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.7s;
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        nav a:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        /* Main Content */
+        .hero {
+            padding: 6rem 5% 4rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan), var(--neon-green), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            line-height: 1.1;
+            animation: titleGlow 5s infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 3rem;
+            color: #ccc;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Neon Flag Animation */
+        .flag-container {
+            width: 90%;
+            max-width: 1200px;
+            height: 450px;
+            margin: 4rem auto;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 
+                0 0 60px rgba(255, 0, 255, 0.4),
+                inset 0 0 60px rgba(0, 0, 0, 0.7);
+            background: rgba(15, 15, 25, 0.9);
+            border: 3px solid rgba(255, 0, 255, 0.3);
+        }
+
+        .flag {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            animation: waveFlag 12s infinite ease-in-out;
+            transform-origin: bottom center;
+            filter: brightness(1.1);
+        }
+
+        .flag-stripe {
+            flex: 1;
+            position: relative;
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .flag-stripe::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+        }
+
+        .flag-stripe:hover::after {
+            animation: stripeShine 1.5s;
+        }
+
+        @keyframes stripeShine {
+            100% { transform: translateX(100%); }
+        }
+
+        .stripe-1 { 
+            background: linear-gradient(to bottom, #ff0055, #ff00aa, #9d00ff);
+            box-shadow: inset 0 0 30px rgba(255, 0, 85, 0.7);
+        }
+        .stripe-2 { 
+            background: linear-gradient(to bottom, #9d00ff, #5500ff, #0080ff);
+            box-shadow: inset 0 0 30px rgba(157, 0, 255, 0.7);
+        }
+        .stripe-3 { 
+            background: linear-gradient(to bottom, #0080ff, #00aaff, #00ffff);
+            box-shadow: inset 0 0 30px rgba(0, 128, 255, 0.7);
+        }
+        .stripe-4 { 
+            background: linear-gradient(to bottom, #00ffff, #00ffaa, #00ff00);
+            box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.7);
+        }
+        .stripe-5 { 
+            background: linear-gradient(to bottom, #00ff00, #aaff00, #ffff00);
+            box-shadow: inset 0 0 30px rgba(0, 255, 0, 0.7);
+        }
+        .stripe-6 { 
+            background: linear-gradient(to bottom, #ffff00, #ffaa00, #ff5500);
+            box-shadow: inset 0 0 30px rgba(255, 170, 0, 0.7);
+        }
+
+        @keyframes waveFlag {
+            0%, 100% { 
+                transform: perspective(500px) rotateX(10deg) skewY(0deg);
+            }
+            25% { 
+                transform: perspective(500px) rotateX(15deg) skewY(3deg);
+            }
+            50% { 
+                transform: perspective(500px) rotateX(10deg) skewY(-1deg);
+            }
+            75% { 
+                transform: perspective(500px) rotateX(15deg) skewY(-3deg);
+            }
+        }
+
+        /* Static Image Gallery */
+        .gallery-section {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+            position: relative;
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+            box-shadow: 0 0 15px var(--neon-pink);
+            border-radius: 2px;
+        }
+
+        .static-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .static-image {
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid transparent;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+            /* Static images - no transitions */
+        }
+
+        .static-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Static - no transitions or effects */
+        }
+
+        .image-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 5, 10, 0.9);
+            padding: 1.2rem;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+            /* Static - no transitions */
+        }
+
+        /* Static Content Section */
+        .content-section {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .static-content {
+            background: rgba(20, 20, 30, 0.7);
+            padding: 2.5rem;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 0, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            /* Static - no transitions */
+        }
+
+        .static-content h3 {
+            color: var(--neon-cyan);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .static-content p {
+            color: #ccc;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5% 2rem;
+            text-align: center;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(255, 0, 255, 0.3);
+            background: rgba(10, 10, 18, 0.8);
+            position: relative;
+            z-index: 10;
+        }
+
+        .social-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .social-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            /* Static - no transitions */
+        }
+
+        .social-icon i {
+            /* Static icon - no effects */
+        }
+
+        .copyright {
+            color: #aaa;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-top: 2rem;
+        }
+
+        .copyright span {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* CTA Button - Kept animated for interaction */
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 2px;
+            margin-top: 2rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.8);
+            filter: brightness(1.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 4rem;
+            }
+            
+            .flag-container {
+                height: 350px;
+            }
+            
+            .static-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .tagline {
+                font-size: 1.4rem;
+            }
+            
+            .flag-container {
+                height: 250px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .static-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-container {
+                gap: 1.5rem;
+            }
+            
+            .social-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .flag-container {
+                height: 200px;
+            }
+            
+            .static-image {
+                height: 250px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="cyber-grid"></div>
+    <div class="neon-glow"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">NEON<span>STATIC</span></div>
+        <nav>
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#gallery">GALLERY</a></li>
+                <li><a href="#content">CONTENT</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        <section class="hero" id="home">
+            <h1>NEON REALM - STATIC VISUALS</h1>
+            <p class="tagline">A cyberpunk experience with animated neon elements and static, unchanging images. Enjoy the flag animation without image transitions.</p>
+            <a href="#gallery" class="cta-button">EXPLORE STATIC GALLERY</a>
+        </section>
+
+        <!-- Animated Flag -->
+        <section class="flag-container">
+            <div class="flag">
+                <div class="flag-stripe stripe-1"></div>
+                <div class="flag-stripe stripe-2"></div>
+                <div class="flag-stripe stripe-3"></div>
+                <div class="flag-stripe stripe-4"></div>
+                <div class="flag-stripe stripe-5"></div>
+                <div class="flag-stripe stripe-6"></div>
+            </div>
+        </section>
+
+        <!-- Static Image Gallery -->
+        <section class="gallery-section" id="gallery">
+            <h2 class="section-title">STATIC NEON GALLERY</h2>
+            <div class="static-grid">
+                <div class="static-image">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Neon City">
+                    <div class="image-label">NEON CITYSCAPE</div>
+                </div>
+                <div class="static-image">
+                    <img src="https://images.unsplash.com/photo-1550686041-366ad85a1355?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w-800&q=80" alt="Cyber Rain">
+                    <div class="image-label">CYBERPUNK RAIN</div>
+                </div>
+                <div class="static-image">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Digital Circuit">
+                    <div class="image-label">DIGITAL CIRCUITRY</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Static Content Section -->
+        <section class="content-section" id="content">
+            <h2 class="section-title">STATIC CONTENT</h2>
+            <div class="content-grid">
+                <div class="static-content">
+                    <h3>STATIC NEON DESIGN</h3>
+                    <p>This website features a full animated neon flag with wave effects, but all images remain completely static. No transitions, no hover effects, no changes to the images. The focus is purely on the flag animation and neon aesthetic.</p>
+                    <p>The neon colors create a vibrant cyberpunk atmosphere while maintaining static visual content for those who prefer consistency in imagery.</p>
+                </div>
+                <div class="static-content">
+                    <h3>FIXED VISUAL ELEMENTS</h3>
+                    <p>All gallery images are displayed without any transitions, animations, or hover effects. They remain exactly as loaded, providing a stable visual experience.</p>
+                    <p>The only animated elements are the neon flag, background grid, text effects, and interactive UI components like buttons and navigation.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="social-container">
+            <div class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </div>
+            <div class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div class="social-icon">
+                <i class="fab fa-github"></i>
+            </div>
+            <div class="social-icon">
+                <i class="fab fa-youtube"></i>
+            </div>
+        </div>
+        <p class="copyright">© 2023 <span>NEON STATIC</span> | Static Images with Animated Neon | Cyberpunk Theme</p>
+    </footer>
+
+    <script>
+        // Enhanced flag interaction only
+        const flagStripes = document.querySelectorAll('.flag-stripe');
+        
+        flagStripes.forEach((stripe, index) => {
+            stripe.addEventListener('mouseenter', function() {
+                this.style.transform = 'scaleY(1.3)';
+                this.style.filter = 'brightness(1.8)';
+                this.style.boxShadow = 'inset 0 0 50px rgba(255, 255, 255, 0.6)';
+            });
+            
+            stripe.addEventListener('mouseleave', function() {
+                this.style.transform = 'scaleY(1)';
+                this.style.filter = 'brightness(1.1)';
+                this.style.boxShadow = 'inset 0 0 30px rgba(255, 255, 255, 0.3)';
+            });
+        });
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const grid = document.querySelector('.cyber-grid');
+            const glow = document.querySelector('.neon-glow');
+            
+            if (grid) {
+                grid.style.transform = `translateY(${scrolled * 0.2}px) translateX(${scrolled * 0.1}px)`;
+            }
+            
+            if (glow) {
+                glow.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // CTA button interaction
+        const ctaButton = document.querySelector('.cta-button');
+        if (ctaButton) {
+            ctaButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Create simple particle effect (doesn't affect images)
+                for (let i = 0; i < 12; i++) {
+                    createParticle(this.getBoundingClientRect().x + this.offsetWidth / 2, 
+                                  this.getBoundingClientRect().y + this.offsetHeight / 2);
+                }
+                
+                // Scroll to gallery
+                document.getElementById('gallery').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '8px';
+            particle.style.height = '8px';
+            particle.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '1000';
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.boxShadow = '0 0 10px currentColor';
+            
+            document.body.appendChild(particle);
+            
+            // Animate particle
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 2 + Math.random() * 3;
+            
+            const animation = particle.animate([
+                { transform: `translate(0, 0)`, opacity: 1 },
+                { transform: `translate(${Math.cos(angle) * speed * 80}px, ${Math.sin(angle) * speed * 80}px)`, opacity: 0 }
+            ], {
+                duration: 800,
+                easing: 'cubic-bezier(0.1, 0.8, 0.9, 0.1)'
+            });
+            
+            // Remove particle after animation
+            animation.onfinish = () => {
+                particle.remove();
+            };
+        }
+
+        // Navigation smooth scrolling
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
